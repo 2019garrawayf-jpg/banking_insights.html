@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>みんなの声から、未来の銀行を考える | Garrawy F インサイト</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&family=Noto+Sans+JP:wght@400;700&display=swap');
+
+        :root {
+            --base-color: #FFFFFF;
+            --main-color: #FFF157;
+            --text-color: #3A3A3A;
+            --gray-color: #f7f7f7;
+            --border-color: #e8e8e8;
+            --accent-mint: #e0f8f3;
+            --accent-peach: #fff2e0;
+        }
+
+        /* Basic Reset & Typography */
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--base-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-weight: 800;
+            line-height: 1.4;
+            letter-spacing: 0.05em;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            display: block;
+            width: 80%;
+            height: 12px;
+            background: var(--main-color);
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            border-bottom: 2px dotted var(--main-color);
+            padding-bottom: 10px;
+            margin-top: 2rem;
+        }
+        
+        .h2-wrapper {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        /* Fade-in Animation on Scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header Section */
+        .hero {
+            background-color: var(--accent-peach);
+            text-align: center;
+            padding: 6rem 2rem;
+            position: relative;
+            background-image:
+                radial-gradient(circle at 15% 15%, #ffffff 1px, transparent 1px),
+                radial-gradient(circle at 80% 85%, #ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #555;
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-alt {
+            background-color: var(--accent-mint);
+        }
+
+
+        .section-intro {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem auto;
+            font-size: 1.1rem;
+        }
+        
+        .section-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        /* Bar Chart for Inconvenience Categories */
+        .chart-container {
+            background-color: var(--base-color);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .chart-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .chart-bar:hover {
+            transform: translateX(10px);
+        }
+
+        .chart-label {
+            width: 30%;
+            font-weight: 700;
+            padding-right: 1rem;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .chart-value-wrapper {
+            width: 70%;
+            background-color: var(--gray-color);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .chart-value {
+            height: 30px;
+            background: linear-gradient(90deg, #ffd900, var(--main-color));
+            border-radius: 50px;
+            color: var(--text-color);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1rem;
+            box-sizing: border-box;
+            white-space: nowrap;
+        }
+        
+        /* Details Table for Inconvenience */
+        .details-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            background-color: var(--base-color);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .details-table th, .details-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .details-table th {
+            background-color: var(--gray-color);
+            font-weight: 700;
+        }
+        .details-table tr:last-child td {
+            border-bottom: none;
+        }
+        .details-table td:first-child {
+            font-weight: bold;
+        }
+
+
+        /* Keyword Cards Section */
+        .keywords-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .keyword-card {
+            background-color: var(--base-color);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .keyword-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        
+        .keyword-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .keyword-card h4 {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        /* Keyword Details */
+        .keyword-details {
+            margin-top: 3rem;
+            background-color: var(--base-color);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .keyword-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .keyword-details li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .keyword-details strong {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            margin-right: 1em;
+            display: inline-block;
+            width: 120px;
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
+        .keyword-details li::before {
+            content: '✓';
+            color: var(--main-color);
+            font-weight: bold;
+            margin-right: 0.7em;
+            font-size: 1.2em;
+        }
+
+
+        /* Correlation Analysis Table */
+        .analysis-grid {
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .analysis-card {
+            background-color: var(--base-color);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .analysis-card h3 {
+            margin-top: 0;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .styled-table th, .styled-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .styled-table th {
+            font-weight: 700;
+        }
+
+        .styled-table td:nth-child(1) {
+            font-weight: 700;
+        }
+        
+        .styled-table td strong {
+            background-color: var(--main-color);
+            padding: 0.2em 0.5em;
+            border-radius: 5px;
+            font-weight: 700;
+        }
+
+        /* Unique Ideas Section */
+        .unique-ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .idea-card {
+            background-color: var(--base-color);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .idea-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+        .idea-card-header {
+            text-align: center;
+            border-bottom: 2px dashed var(--main-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .idea-card-icon {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+        .idea-card-title {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 0.5rem 0 0 0;
+        }
+        .idea-card-body p {
+            margin: 0 0 1rem 0;
+            font-size: 0.95rem;
+        }
+        .idea-card-body p:last-child {
+            margin-bottom: 0;
+        }
+        .idea-card-body p::before {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        p.problem::before {
+            content: 'こんな悩み...';
+        }
+        p.solution::before {
+            content: '💡こんなアイデア！';
+        }
+
+
+        /* Final Insight Section */
+        .insight-box {
+            background-color: var(--base-color);
+            border: 2px dashed var(--main-color);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        
+        .insight-box p {
+            font-size: 1.1rem;
+            line-height: 2;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            background-color: var(--gray-color);
+            margin-top: 4rem;
+            font-size: 0.9rem;
+            color: #777;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 2rem;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .container {
+                padding: 3rem 1.5rem;
+            }
+            .chart-label {
+                width: 40%;
+                font-size: 0.9rem;
+            }
+            .chart-value-wrapper {
+                width: 60%;
+            }
+            .styled-table, .details-table {
+                font-size: 0.9rem;
+            }
+             .styled-table th, .styled-table td, .details-table th, .details-table td {
+                padding: 0.8rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>みんなの声から、<br>未来の銀行を考える</h1>
+        <p>Garrawy Fのコワーキングスペースに集まった230人のメンバーさんの声。そこから見えてきた、これからの銀行サービスへの期待とひらめきを、データで紐解きます。</p>
+    </header>
+
+    <main>
+        <section class="section">
+            <div id="inconvenience" class="container">
+                <div class="fade-in">
+                    <div class="h2-wrapper">
+                        <h2>みんなの「不便さ」は、どこにある？</h2>
+                    </div>
+                    <p class="section-intro">
+                        メンバーさんが感じている「不便さ」の内容を7つのカテゴリに分類し、それぞれの割合を算出しました。「営業時間・ATM」に関する不便さが最も多く、全体の約3割を占めています。次いで「手数料」、「オンライン・手続き」に関する不便さが多いことがわかります。
+                    </p>
+                    <div class="chart-container">
+                        <div class="chart-bar"><div class="chart-label">営業時間・ATM</div><div class="chart-value-wrapper"><div class="chart-value" style="width: 31.3%;">31.3%</div></div></div>
+                        <div class="chart-bar"><div class="chart-label">手数料</div><div class="chart-value-wrapper"><div class="chart-value" style="width: 23.0%;">23.0%</div></div></div>
+                        <div class="chart-bar"><div class="chart-label">オンライン・手続き</div><div class="chart-value-wrapper"><div class="chart-value" style="width: 22.2%;">22.2%</div></div></div>
+                        <div class="chart-bar"><div class="chart-label">サービス・機能</div><div class="chart-value-wrapper"><div class="chart-value" style="width: 10.9%;">10.9%</div></div></div>
+                        <div class="chart-bar"><div class="chart-label">セキュリティ</div><div class="chart-value-wrapper"><div class="chart-value" style="width: 5.2%;">5.2%</div></div></div>
+                        <div class="chart-bar"><div class="chart-label">その他</div><div class="chart-value-wrapper"><div class="chart-value" style="width: 4.4%;">4.4%</div></div></div>
+                        <div class="chart-bar"><div class="chart-label">口座管理</div><div class="chart-value-wrapper"><div class="chart-value" style="width: 3.0%;">3.0%</div></div></div>
+                    </div>
+                    <table class="details-table">
+                        <thead>
+                            <tr>
+                                <th>カテゴリ</th>
+                                <th>主な内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>営業時間・ATM</td>
+                                <td>窓口やATMが早く閉まる、土日祝に使えない、待ち時間が長い</td>
+                            </tr>
+                            <tr>
+                                <td>手数料</td>
+                                <td>ATM手数料、振込手数料が高い、時間外手数料がかかる</td>
+                            </tr>
+                            <tr>
+                                <td>オンライン・手続き</td>
+                                <td>手続きが面倒・複雑、アプリが使いにくい、ログイン・パスワード管理が大変</td>
+                            </tr>
+                            <tr>
+                                <td>サービス・機能</td>
+                                <td>キャッシュレス連携、口座連携、サービスが分かりにくい</td>
+                            </tr>
+                            <tr>
+                                <td>セキュリティ</td>
+                                <td>不正利用への不安、認証が手間、パスワード忘れ</td>
+                            </tr>
+                            <tr>
+                                <td>その他</td>
+                                <td>高齢者・未成年の利用、知識不足、海外利用</td>
+                            </tr>
+                             <tr>
+                                <td>口座管理</td>
+                                <td>複数口座の管理が大変、口座開設が面倒</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div id="keywords" class="container">
+                <div class="fade-in">
+                    <div class="h2-wrapper">
+                        <h2>未来へのヒントは、こんな言葉たち</h2>
+                    </div>
+                    <div class="keywords-grid">
+                        <div class="keyword-card">
+                            <div class="keyword-icon">💡</div>
+                            <h4>AI・オンライン化</h4>
+                        </div>
+                        <div class="keyword-card">
+                            <div class="keyword-icon">👆</div>
+                            <h4>認証の簡素化</h4>
+                        </div>
+                        <div class="keyword-card">
+                            <div class="keyword-icon">⏰</div>
+                            <h4>時間の延長</h4>
+                        </div>
+                        <div class="keyword-card">
+                            <div class="keyword-icon">💰</div>
+                            <h4>手数料の改善</h4>
+                        </div>
+                    </div>
+                     <div class="keyword-details">
+                        <p>メンバーさんから提案された「解決策」の中で、特に頻繁に登場したキーワードは以下の通りです。</p>
+                        <ul>
+                            <li><strong>AI・オンライン化:</strong> 「AI導入」「オンライン化」「アプリ」「システム」</li>
+                            <li><strong>認証の簡素化:</strong> 「生体認証」「指紋認証」「顔認証」</li>
+                            <li><strong>時間の延長:</strong> 「24時間」「時間延長」「土日対応」</li>
+                            <li><strong>手数料の改善:</strong> 「手数料無料」「手数料引き下げ」</li>
+                        </ul>
+                        <p>メンバーさんは、AIやデジタル技術を活用して、時間や場所の制約をなくし、より簡単で安全な認証方法を求めている傾向が強いと言えます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div id="correlation" class="container">
+                <div class="fade-in">
+                     <div class="h2-wrapper">
+                        <h2>属性ごとの「不便さ」をのぞいてみよう</h2>
+                    </div>
+                    <div class="analysis-grid">
+                        <div class="analysis-card">
+                            <h3>【年代別】関心の違い</h3>
+                            <p>年代によって、感じる不便さの傾向に違いが見られました。特に<strong>10代は「手数料」</strong>に、<strong>20代は「営業時間・ATM」</strong>に、<strong>50代以上は「オンライン・手続き」</strong>に不便さを感じやすい傾向があります。</p>
+                            <table class="styled-table">
+                                <thead><tr><th>年代</th><th>手数料</th><th>営業時間・ATM</th><th>オンライン・手続き</th></tr></thead>
+                                <tbody>
+                                    <tr><td>10代</td><td><strong>32.5%</strong></td><td>25.0%</td><td>12.5%</td></tr>
+                                    <tr><td>20代</td><td>20.3%</td><td><strong>35.4%</strong></td><td>21.5%</td></tr>
+                                    <tr><td>30代＆40代</td><td>23.4%</td><td>29.9%</td><td>24.7%</td></tr>
+                                    <tr><td>50代</td><td>21.9%</td><td>25.0%</td><td><strong>28.1%</strong></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+             <div id="unique-ideas" class="container">
+                <div class="fade-in">
+                    <div class="h2-wrapper">
+                        <h2>未来を切り拓く、ユニークなアイデアたち</h2>
+                    </div>
+                    <p class="section-intro">
+                        みんなの声の中には、思わず「なるほど！」と膝を打つような、創造性あふれる解決策もたくさんありました。ここでは、特にユニークで面白いアイデアをいくつかピックアップしてご紹介します。
+                    </p>
+                    <div class="unique-ideas-grid">
+                        <div class="idea-card">
+                            <div class="idea-card-header">
+                                <div class="idea-card-icon">🃏</div>
+                                <h4 class="idea-card-title">口座の「ワイルドカード」</h4>
+                            </div>
+                            <div class="idea-card-body">
+                                <p class="problem">アルバイトや就職のたびに、指定の銀行口座が増えてしまう…。</p>
+                                <p class="solution">どの金融機関でも使える「共通口座」のような仕組みがあれば、管理が楽になるはず。</p>
+                            </div>
+                        </div>
+                        <div class="idea-card">
+                            <div class="idea-card-header">
+                                <div class="idea-card-icon">📱</div>
+                                <h4 class="idea-card-title">「お金を使ってる感」を出すUI</h4>
+                            </div>
+                            <div class="idea-card-body">
+                                <p class="problem">キャッシュレスだと、お金を使っている感覚がなくて使いすぎてしまう…。</p>
+                                <p class="solution">残高を数字だけでなく、紙幣や硬貨のイラストで表示。視覚的に支出を実感できる工夫。</p>
+                            </div>
+                        </div>
+                        <div class="idea-card">
+                            <div class="idea-card-header">
+                                <div class="idea-card-icon">🤝</div>
+                                <h4 class="idea-card-title">自分に合う銀行員とのマッチング</h4>
+                            </div>
+                            <div class="idea-card-body">
+                                <p class="problem">融資の相談をしたいけど、どの担当者になるかで話の進み方が全然違う「銀行マンガチャ」。</p>
+                                <p class="solution">自分の事業内容や性格に合った銀行員とマッチングしてくれるサービス。</p>
+                            </div>
+                        </div>
+                        <div class="idea-card">
+                            <div class="idea-card-header">
+                                <div class="idea-card-icon">🎬</div>
+                                <h4 class="idea-card-title">ドラマ仕立ての情報発信</h4>
+                            </div>
+                            <div class="idea-card-body">
+                                <p class="problem">銀行の便利なサービス、たくさんあるはずなのに全然知らないままなのがもったいない…。</p>
+                                <p class="solution">つい見てしまうショート動画で、サービスの魅力をドラマ仕立てで発信。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div id="conclusion" class="container">
+                 <div class="fade-in">
+                    <div class="h2-wrapper">
+                        <h2>浮かび上がってきた、未来の銀行の姿</h2>
+                    </div>
+                     <div class="insight-box">
+                        <p>
+                            みんなの声が描き出したのは、「時間や場所にとらわれず、もっと自分らしく、スマートに付き合える銀行」の姿でした。<br>
+                            テクノロジーの力で手続きをシンプルにし、一人ひとりのライフスタイルに寄り添うこと。<br>
+                            それが、これからの銀行に寄せられる大きな期待なのかもしれません。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Garrawy F. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simple fade-in on scroll animation
+        const faders = document.querySelectorAll('.fade-in');
+        const appearOptions = {
+            threshold: 0.2,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                } else {
+                    entry.target.classList.add('visible');
+                    appearOnScroll.unobserve(entry.target);
+                }
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    </script>
+</body>
+</html>
+
